@@ -1,0 +1,56 @@
+.main_PlatForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 30px;
+  height: 42vw;
+  box-shadow: 0 0  200px 0 rgba(0,0,0,2) inset;
+ 
+}
+
+.sub_Platform1 {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px;
+  
+}
+
+.plortFormBoxes {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #48494e;
+  padding: 33px;
+  background-color: #1a202c;
+  border-radius: 6px;
+}
+.plortFormBoxes:hover{
+  border: 1px solid white;
+
+}
+
+.sub_Platform2 {
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+}
+
+.sub_Platform3{
+   margin-left: 150px;
+   
+}
+.sub_Platform3 h1{
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-family: Outfit;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.sub_Platform3 p{
+    color: #A0AEC0;
+    font-size: 1rem;
+    font-family: Open sans;
+    font-weight: 400;
+    width: 41%;
+
+}

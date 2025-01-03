@@ -1,0 +1,356 @@
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+[data-theme="dark"] {
+  /* --bg-color : linear-gradient(#121212, #171923, #171923); */
+  --navbar-color: #18181b;
+  --text-color: #ffffffeb;
+  --bg-color: #1f1f23;
+  --border-color: #d6d6d6;
+}
+
+.Workspace_Main_Container {
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+.Workspace_Navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: var(--navbar-color);
+  color: var(--text-color);
+}
+.Workspace_Theme {
+  display: flex;
+  align-items: center;
+  gap: 1.2vw;
+}
+.Workspace_NavbarBtns {
+  display: flex;
+  align-items: center;
+  gap: 4vw;
+}
+.Workspace_input input {
+
+  background-color: var(--bg-color);
+  border: 1px solid #d6d6d6;
+  height: 4vh;
+  padding: 5px 20px;
+  border-radius: 3px;
+  color: var(--text-color);
+}
+.Workspace_flowbtn {
+  color: #7ea6ff;
+  border: 1px solid #7ea6ff;
+  background-color: transparent;
+  padding: 6px 8px;
+  text-align: center;
+  border-radius: 6px;
+  box-shadow: 0px 0px 3px 0 #7ea6ff;
+  cursor: pointer;
+}
+
+.Workspace_Responsebtn {
+  font-family: Open sans;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+/* dark and light */
+.dark {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: Open sans;
+  font-size: 1rem;
+  color: #ffffffeb;
+}
+
+/* lgiht&dark Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* share and save buttons */
+.Workspace_NavbarButton {
+  display: flex;
+  gap: 1vw;
+}
+.Workspace_shareBtn {
+  font-family: Open sans;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 5px 8px;
+  border-radius: 4px;
+  color: #ffffff;
+  background-color: #1651c5;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.Workspace_saveBtn {
+  font-family: Open sans;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 5px 8px;
+  border-radius: 4px;
+  color: #ffffff;
+  background-color: #4ade80cc;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.Workspace_XBtn {
+  background-color: transparent;
+  color: #f55050;
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* ------------------workspace content------------------ */
+.Workspace_content {
+  display: flex;
+}
+
+.Workspace_Leftpanel {
+  width: 25%;
+  padding: 20px;
+  margin: 0px 20px;
+  background-color: var(--navbar-color);
+  color: white;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+}
+
+.sidebar {
+  padding-top: 7vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.bubble {
+  margin-bottom: 10px;
+}
+.bubble h3 {
+  font-family: Open sans;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.bubble button {
+  width: 149px;
+  height: 40px;
+  font-family: Open sans;
+  font-weight: 400;
+  font-size: 0.9rem;
+  background-color: var(--bg-color);
+  padding: 9px 17px 9px 17px;
+  border-radius: 8px;
+  border: 1px solid #d6d6d6;
+  color: var(--text-color);
+  cursor: pointer;
+  margin: 8px;
+  text-align: start;
+}
+.bubble button i {
+  color: #4b83ff;
+  margin-right: 10px;
+}
+
+.inputes h3 {
+  font-family: Open sans;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.inputes button {
+  width: 149px;
+  height: 40px;
+  font-family: Open sans;
+  font-weight: 400;
+  font-size: 0.9rem;
+  background-color: var(--bg-color);
+  padding: 9px 17px 9px 17px;
+  border-radius: 8px;
+  border: 1px solid #d6d6d6;
+  color: var(--text-color);
+  margin: 8px;
+  text-align: start;
+}
+
+.inputes button i {
+  color: #ffa54c;
+  margin-right: 10px;
+}
+
+/* ----------right panel ----------------- */
+
+.Workspace_Rightpanel {
+  width: 70%;
+  padding: 20px;
+  margin: 0px 20px;
+  color: white;
+
+  border-radius: 8px;
+  position: relative;
+}
+
+.Workspace_Rightpanel_Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3vh;
+}
+
+.startFlag {
+  width: 309px;
+  height: 60px;
+  background-color: red;
+  border-radius: 12px;
+  border: 1px solid #d6d6d6;
+  background-color: var(--navbar-color);
+  color: var(--text-color);
+  padding: 15px;
+  margin-top: 8vh;
+  margin-bottom: 5vh;
+}
+
+.startFlag h4 {
+  font-family: Open sans;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.startFlag h4 i {
+  margin-right: 0.7vw;
+}
+
+.Workspace_FormField{
+  width: 315px;
+  height: 119px;
+  background-color: var(--navbar-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  border: 1px solid #d6d6d6;
+}
+
+.Workspace_FormField label{
+  font-family: Open sans;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.Workspace_FormField input{
+  width: 100%;
+  height: 40px;
+  background-color: var(--bg-color);
+  border: 0.1px solid #d6d6d6;
+  padding: 5px 20px;
+  border-radius: 3px;
+  color: var(--text-color);
+}
+
+
+.deleteBtn{
+  position: absolute;
+  top: -2vh;
+  right: -1vw;
+  background-color: var(--bg-color);  
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #d6d6d6;
+}
+.deleteBtn button{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #f55050;
+  cursor: pointer;
+}

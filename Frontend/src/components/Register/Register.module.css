@@ -1,0 +1,170 @@
+
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  background: linear-gradient(#121212, #18181b);
+  overflow: hidden;
+}
+
+.leftArrow {
+  margin-bottom: 60px;
+}
+.leftArrow i {
+  position: absolute;
+  top: 80px;
+  left: 150px;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.register form {
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  gap: 20px;
+  width: 20%;
+}
+
+.registerInput label {
+  font-size: 0.9rem;
+  font-family: Poppins;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #c4c4c400;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-family: Poppins;
+  margin-top: 5px;
+  outline: none ;
+}
+
+.registerForm button {
+  padding: 10px;
+  border-radius: 12px;
+  background-color: #1a5fff;
+  color: #ffffff;
+  font-family: Poppins;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.google p {
+  font-size: 0.9rem;
+  font-family: Poppins;
+  color: #ffffff;
+  text-align: center;
+  margin: 10px;
+}
+
+.google button {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  width: 20%;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: #1a5fff;
+  color: #ffffff;
+  font-family: Poppins;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.google img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.already {
+  margin: 20px;
+  color: #ffffff;
+  font-family: Inter;
+  font-family: 0.9rem;
+  font-weight: 400;
+}
+
+.already a {
+  color: #1a5fff;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.semiCircle1 {
+  position: absolute;
+  transform: translate(-50%, -25%);
+  height: 200px;
+  width: 230px;
+  border-radius: 150px 150px 0 0;
+  background-color: #ff9595;
+  transform: rotate(270deg);
+  left: 92%;
+  top: 20%;
+}
+
+.semiCircle2 {
+  position: absolute;
+  transform: translate(-50%, -25%);
+  height: 200px;
+  width: 230px;
+  border-radius: 150px 150px 0 0;
+  background-color: #ffbf7d;
+  transform: rotate(360deg);
+  left: 63%;
+  top: 84%;
+}
+
+.triangle1 {
+  position: absolute;
+  right: 75%;
+}
+
+.triangle2 {
+  position: absolute;
+  right: 73%;
+  bottom: 39%;       
+}
+
+.Error label{
+  color: red;
+}
+
+.Error p{
+  color: red;
+  font-size: 0.9rem;
+  font-family: Poppins;
+  font-weight: 500;
+  height: 30px;
+}
+
+.Error input{
+  border: 1px solid red;
+}
+
+

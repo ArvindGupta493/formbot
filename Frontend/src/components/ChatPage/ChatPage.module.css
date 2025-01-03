@@ -1,0 +1,90 @@
+.main_Chatcontent{
+    width: 100%;
+    height: 140vh;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.innerChatcontent{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    height: 100%;
+    gap: 15%;
+}
+
+.ChatText{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ChatText h1{
+    color:#FFFFFF;
+    font-size: 4rem;
+    font-weight: 700;
+    text-align: center;
+    font-family: Outfit;
+}
+
+.ChatText p{
+    color: #A0AEC0;
+    font-size: 1rem;
+    font-family: Open sans;
+    font-weight: 700;
+    text-align: center;
+}
+
+.ChatResult{
+    border: 1px solid #48494e;
+    height: 70vh;
+    border-radius: 5px;
+    padding: 40px;
+}
+
+.ChatresultText{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;  
+}
+.ChatresultText span{
+    background-color: #1E293B;
+    width: 25vw;
+    border-radius: 5px;
+    padding: 10px;
+    color: #FFFFFF;
+    font-family: Open sans;
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+.chatProfile{
+    position: relative;
+}
+.chatProfile img{
+    position: absolute;
+    bottom: 50%;
+    left: -15%;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.ChatResult button{
+    position: relative;
+    border-radius: 5px;
+    padding: 10px 15px 10px 15px;
+    background-color: #1A5FFF;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-align: center;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    top: 5%;
+    left: 82%;
+}

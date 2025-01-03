@@ -1,0 +1,575 @@
+body{
+
+    width: 100vw;
+    height: 100%;
+    max-width: 100%;
+}
+
+.MainContainer{
+    background: linear-gradient(#121212, #171923, #171923);  
+    width: 100vw;
+    height: 100%;
+    max-width: 100%;
+}
+
+/* ------- Navbar -------- */
+.Navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8%;
+    height: 12vh;
+    color: white;
+}
+
+.NavbarLogo{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.NavbarLogo img{
+    width: 40px;
+    height: 40px;
+}
+
+.NavbarLogo h5{
+    font-size: 1rem;
+    font-style: bold;
+    font-family: poppins;
+}
+
+.rightNav{
+    display: flex;
+    gap: 15px;
+}
+.rightNav a{
+    text-decoration: none;
+    font-family: Open sans;
+}
+
+
+.NavLogin{
+    font-size: 1rem;
+    font-family: Open Sans;
+    color: #7EA6FF;
+    background-color: transparent;
+    padding: 10px;
+    border: 2px solid #7EA6FF;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.NavLogin:hover{
+    background-color: rgb(82, 82, 119);
+}
+
+.NavCreate{
+    font-size: 1rem;
+    font-family: Open Sans;
+    color: #FFFFFF;
+    background-color: #1A5FFF;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.NavCreate:hover{
+    background-color: #7EA6FF;
+}
+
+/* ------- Content1 -------- */
+
+.Content1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 23vh;
+    /* height: 60vh; */
+}
+
+.InnerContent1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* flex-direction: column; */
+    position: relative;
+    top:12vh;
+    max-width: 100%;
+}
+
+.content1Hading {
+    text-align: center;
+    font-family: Outfit;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background:linear-gradient(#4B83FF, #B794F4);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.InnerHeading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60vw;
+}
+
+.InnerContent1 img{
+    width: 20vw;
+}
+
+.content1Para{
+    width: 49vw;
+    color: #FFFFFF;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-family: Open sans;
+    text-align: center;
+    margin-bottom: 3vh;
+}
+
+.content1Btn button{
+    font-size: 1rem;
+    font-family: Open Sans;
+    color: #FFFFFF;
+    background-color: #1A5FFF;
+    padding: 15px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.content1Image{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    top: -55px;
+    z-index: 9;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.ParentImg{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    margin-bottom: 120px;
+}
+.BackgroundImg1{
+    max-width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    display: flex;
+    z-index: 0;
+}
+
+/* ------- Content2 -------- */
+
+.FormContent{
+    margin-top: 25vh;
+}
+.InnerFormContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #FFFFFF;
+}
+
+.FormContentHeading h1{
+    font-family: Outfit;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.FormContentPara p{
+    font-family: Open Sans;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #A0AEC0;
+    /* width: 90vw; */
+}
+
+/* form icons */
+.FormIcons{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* form */
+.FormContent_Form{
+    display: flex;
+    gap: 24px;
+}
+
+/* FormLeft */
+.FormLeft{  
+    border: 1px solid #A0AEC0;
+    width: 35vw;
+    padding: 20px;
+    font-family: Open Sans;
+    color: #FFFFFF;
+    border-radius: 5px;
+
+}
+
+.name{
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.email{
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.FormLeft h4{
+    font-size: 1rem;
+    font-weight: 400;
+}
+.FormLeft span{
+    color: #FC8181;
+}
+
+/* Checkboxes */
+
+
+  
+.CheckBoxes h2 {
+    font-size: 1rem;
+    font-family: Open sans;
+    font-weight:400;
+    margin-bottom: 10px;
+  }
+  
+.CheckBoxes h2 span {
+    color: #FC8181;
+}
+
+.checkbox{
+    /* background-color: red; */
+    display: flex;
+    text-align: left;
+    justify-content: center;
+    width: 50%;
+    gap: 10px;
+    margin-bottom: 10px;
+  
+
+}
+.checkbox input[type=checkbox]{
+    content: "";
+    height: 2.5vh;
+}
+
+.checkbox label{
+    width: 100vw;
+}
+  
+
+  
+
+.FormContent_textarea{
+    margin-top: 20px;
+}
+
+.FormContent_textarea h4{
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.FormContent_textarea textarea{
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    font-family: Open Sans;
+    font-size: 1rem;
+    border: 1px solid #A0AEC0;
+    border-radius: 5px;
+    outline: none;
+    color: #FFFFFF;
+    background-color: transparent;
+    /* background-color: #1A202C; */
+}
+
+.FormBtn button{
+    margin-top: 15px;
+    padding: 10px 16px;
+    background-color: #1A5FFF;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+/* FormRight */
+
+.FormRight{
+    border: 1px solid #A0AEC0;
+    width: 35vw;
+    border-radius: 5px;
+
+}
+
+.chat_section{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 5vh;
+    left: 5vw;
+}
+.welcom{
+    background-color: #1E293B;
+    width: 19vw;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.welcom span{
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.ChatSection_video{
+    width: 80%;
+    background-color: #1E293B;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.ChatSection_video img{
+    width: 100%;
+    height: 50%;
+}
+
+.chatText{
+    margin-top: 10px;
+    position: relative;
+}
+.chatText button {
+    position: absolute;
+    border-radius: 5px;
+    padding: 10px 15px 10px 15px;
+    background-color: #1A5FFF;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-align: center;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    left: 70%;
+    
+}
+
+.chatText img{
+    position: absolute;
+    left: -10%;
+    bottom: -15%;
+    border-radius: 50%;
+    width: 3vw;
+    height: 3vw;
+    object-fit: cover;
+}
+
+/* container3 */
+
+.container3{
+    height: 60vh;
+    margin-top: 50px;
+}
+
+.innerContainer3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    height: 75vh;
+}
+
+.innerContainer3 img{
+    width: 35vw;
+    height: 45vh;
+}
+
+.container3Text{
+    width: 18vw;
+}
+
+.container3Text h1{
+    color: #FFFFFF;
+    font-family: Outfit;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.container3Text p{
+    color: #A0AEC0;
+    font-family: Open Sans;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* container4 */
+
+.container4{
+    height: 60vh;
+    margin-top: 20px;
+}
+
+.innerContainer4{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    height: 75vh;
+}
+
+.innerContainer4 img{
+    width: 35vw;
+    height: 45vh;
+}
+
+.container4Text{
+    width: 19vw;
+}
+
+.container4Text h1{
+    color: #FFFFFF;
+    font-family: Outfit;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.container4Text p{
+    color: #A0AEC0;
+    font-family: Open Sans;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* container8 */
+
+.container8{
+    height: 100vh; 
+}
+
+.InnerContainer8{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130vh;
+
+}
+.backgroundTri{
+    position: relative;
+    bottom: 28%;
+    right: 8%;
+}
+
+.backgroundUU{
+    position: relative;
+    left: 5%;
+}
+
+.UserEngagement{
+    width: 43%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.UserEngagement h1{
+    color: #FFFFFFEB;
+    font-family: Outfit;
+    font-weight: 700;
+    font-size: 2rem;
+}
+.userBtn button{
+    background-color: #1A5FFF;
+    color: #FFFFFFEB;
+    border-radius: 6px;
+    padding: 21px 24px;
+    font-size: 1rem;
+    font-family: Open sans;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.userBtn button:hover{
+    background-color: #485165;
+}
+
+.UserEngagement p{
+    color: #A0AEC0;
+    font-family: Open sans;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+.container8 img{
+   float: right;
+}
+
+/* footer */
+.footer{
+    height:30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8vw;
+    color: #FFFFFFEB;
+    background-color: #121212;
+}
+
+.FooterLinks{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.FooterLinks a{
+    display: flex;
+    gap: 5px;
+    color: #FFFFFFEB;
+    font-family: Open sans;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.cuvette p{
+    color: #FFFFFFEB;
+    font-family: Open sans;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+
+
