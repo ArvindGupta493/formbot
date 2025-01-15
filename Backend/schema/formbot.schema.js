@@ -17,6 +17,9 @@ const FormBotSchema = new mongoose.Schema({
       value: { type: String, default: '' }  // Used for prefilled or user input (only relevant for input fields)
     }
   ],
+  viewCount: { type: Number, default: 0 },
+  startedCount: { type: Number, default: 0 },
+  submittedCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },  // Timestamp when the form bot is created
   updatedAt: { type: Date, default: Date.now }   // Timestamp when the form bot is updated
 });

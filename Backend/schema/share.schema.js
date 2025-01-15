@@ -2,18 +2,11 @@ const mongoose = require('mongoose');
 
 // ShareableLink Schema
 const shareableLinkSchema = new mongoose.Schema({
-  form: { type: mongoose.Schema.Types.ObjectId, ref: 'Form' },
-  linkId: { type: String, unique: true },
+  form: { type: mongoose.Schema.Types.ObjectId, ref: 'FormBot' }, // Reference to Form
+  linkId: { type: String, unique: true }, // Unique shareable link ID
+  createdAt: { type: Date, default: Date.now }, // Timestamp for when the link was created
 });
 
 const ShareableLink = mongoose.model('ShareableLink', shareableLinkSchema);
+
 module.exports = ShareableLink;
-
-// FormResponse Schema
-const formResponseSchema = new mongoose.Schema({
-  form: { type: mongoose.Schema.Types.ObjectId, ref: 'Form' },
-  responses: [Object], // Store responses as an array of key-value pairs
-});
-
-const FormResponse = mongoose.model('FormResponse', formResponseSchema);
-module.exports = FormResponse;

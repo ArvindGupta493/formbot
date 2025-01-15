@@ -1,53 +1,111 @@
-.chatbotContainer{
-    background-color: red;
+.container{
+    /* background-color: red;  */
     width: 100%;
-    max-width: 100%;
-    /* min-height: 100vh; */
     display: flex;
-    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
 
 }
 
-.chatbot_innerContainer{
-    width: 50vw;
-    background-color: aqua;
-    padding: 3vw;
-}
-.bot{
+.chatContainer{
     display: flex;
-    justify-content: start;
+    flex-direction: column;
+    margin:50px 100px; 
+    width: 50%;
+    height: 85vh;
+}
+
+.chatContainer h2{
+    text-align: center;
+}
+.bubbleStyle{
+    background-color: rgba(241, 241, 241, 0.814);
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-family: Open sans;
+    font-size: 1rem;
+}
+.inputStyle{
+    background-color: #FF8E21;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-family: Open sans;
+}
+
+.inputDiv{
+    text-align: right;
+}
+
+.bubbleDiv{
+    display: flex;
     align-items: center;
-    gap: 1vw;
-    margin-bottom: 3vh;
+    gap: 10px;
 }
 
-.bot span{
-    border: 1px solid black;
+
+.bubbleDiv img{
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    background-color: blue;
+    object-fit: cover;
 }
 
-.bot p{
-    font-family: Open sans;
-    font-size: 0.9rem;
-    font-weight: 400;
-    background-color:#777777;
-    padding: 0.8vw;
-    border-radius: 0.8vw;
-    color: #040404;
+.chatBox{
+    /* background-color: red; */
+    height: 80vh;
 }
 
-.userChat_content label{
-    font-family: Open sans;
-    font-size: 0.9rem;
-    font-weight: 400;
-    background-color:#777777;
-    padding: 0.8vw;
-    border-radius: 0.8vw;
-    color: #040404;
+.inputSend{
+    display: flex;
+}
+
+.inputContainer{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 10px;
     
+
 }
+
+.inputContainer input{
+    width: 30%;
+    color: #040404;
+    border: none;
+    box-shadow: 0px 0px 5px 0px grey;
+    margin-top: 20px;
+
+}
+.inputContainer button{
+    margin-top: 15px;
+    padding: 5px 10px;
+    font-family: Open sans;
+    font-size: 1rem;
+    background-color: #1A5FFF;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.inputContainer img{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    /* border-radius: 50%; */
+    object-fit: cover;
+}
+
+.thankyouDiv{
+    margin-top: 20px;
+}
+
+
+

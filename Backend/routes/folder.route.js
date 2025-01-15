@@ -15,12 +15,9 @@ router.get('/form/:formId', getFormById);
 router.put('/form/:formId', updateFormById);
 router.delete('/form/:formId', deleteFormById);
 
+
 // folder.route.js
-// router.post('/generate-share-link', shareForm);
 router.post('/generate-share-link', auth, generateShareLink);
-
-
-// router.post('/generate-share-link',shareForm)
 router.post('/folder/:folderId/create-or-update-form', auth, createOrUpdateForm);
 
 module.exports = router;
