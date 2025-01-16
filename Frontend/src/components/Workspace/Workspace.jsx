@@ -18,8 +18,8 @@ const Workspace = () => {
   const [formName, setFormName] = useState("");
   const [forms, setFormResponses] = useState([]);
   const [showResponse, setShowResponse] = useState(true);
-  const [viewCount, setViewCount] = useState(0); // Add state for view count
-  const [submittedCount, setSubmittedCount] = useState(0); // Add state for submitted count
+  const [viewCount, setViewCount] = useState(0);
+  const [submittedCount, setSubmittedCount] = useState(0); 
   const formId = localStorage.getItem("formId");
 
   const headers = Object.keys(forms[0] || {});
@@ -53,19 +53,25 @@ const Workspace = () => {
             },
           }
         );
-
+  
         if (responsesResponse.data.success && responsesResponse.data.data) {
-          // Transform the response data to flatten responses
-          const transformedResponses = responsesResponse.data.data.map(
-            (entry, index) => {
-              const responseObj = { responseIndex: index + 1 };
-              entry.responses.forEach((response) => {
-                responseObj[response.label] = response.answer;
-              });
-              return responseObj;
+          const transformedResponses = responsesResponse.data.data.map((entry) => {
+            let submissionTime = "Unknown";
+            if (entry.createdAt) {
+              const date = new Date(entry.createdAt);
+              if (!isNaN(date)) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric',second:'numeric'};
+                submissionTime = date.toLocaleDateString('en-US', options); 
+              }
             }
-          );
-
+            const responseObj = { submissionTime };
+  
+            entry.responses.forEach((response) => {
+              responseObj[response.label] = response.answer;
+            });
+            return responseObj;
+          });
+  
           setFormResponses(transformedResponses);
         } else {
           console.error("Invalid response data:", responsesResponse.data);
@@ -77,7 +83,9 @@ const Workspace = () => {
       toast.error("Error fetching responses.");
     }
   }, [formId]);
-
+  
+  
+  
   useEffect(() => {
     const fetchFormData = async () => {
         try {
@@ -109,7 +117,7 @@ const Workspace = () => {
       };
       
     fetchFormData();
-  }, [formId, fetchResponses]); // Add fetchResponses as a dependency
+  }, [formId, fetchResponses]);
 
   
   const addBubble = (type) => {
@@ -240,7 +248,7 @@ const Workspace = () => {
             <button
               className={style.Workspace_Responsebtn}
               onClick={() => {
-                fetchResponses(); // Explicitly fetch responses
+                fetchResponses(); 
                 setShowResponse(false);
               }}
             >
