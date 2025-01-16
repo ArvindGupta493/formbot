@@ -166,9 +166,11 @@ exports.shareForm = async (req, res) => {
     });
     await shareableLink.save();
 
-    const fullLink = `${req.protocol}://${req.get("host")}/chatbot/${shareableLinkId}`;
-    console.log("Shareable link saved:", fullLink);
+    const frontendUrl = 'http://localhost:5173'; 
 
+    const fullLink = `${frontendUrl}/chatbot/${shareableLinkId}`;
+    console.log("Shareable link saved:", fullLink);
+    
     res.json({
       success: true,
       link: fullLink,
@@ -252,6 +254,7 @@ exports.saveFormResponse = async (req, res) => {
     const formResponse = new FormResponse({
       form: formId,
       responses,
+      submittedAt: new Date(), 
     });
     await formResponse.save();
 
@@ -287,6 +290,7 @@ exports.getFormResponses = async (req, res) => {
     res.status(200).json({
       success: true,
       data: formResponses,
+      submittedAt: new Date(), 
     });
   } catch (error) {
     console.error("Error fetching form responses:", error);
@@ -294,4 +298,4 @@ exports.getFormResponses = async (req, res) => {
   }
 };
 
-// why the generated share link not opening the form
+
