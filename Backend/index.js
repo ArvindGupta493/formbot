@@ -14,7 +14,7 @@
     dotenv.config();
 
     // Enable CORS
-    app.use(cors());
+    app.use(cors({ origin: 'http://localhost:5173' })); // Replace with your frontend URL
 
     // Define the port from environment or default to 4000
     const PORT = process.env.PORT || 4000;
