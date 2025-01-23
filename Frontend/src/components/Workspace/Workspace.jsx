@@ -11,6 +11,8 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 // import style from './Response.module.css';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
 const Workspace = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
@@ -46,7 +48,7 @@ const Workspace = () => {
     try {
       if (formId) {
         const responsesResponse = await axios.get(
-          `http://localhost:4000/api/forms/responses/${formId}`,
+          `${BACKEND_URL}/api/forms/responses/${formId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -91,7 +93,7 @@ const Workspace = () => {
         try {
           if (formId) {
             const response = await axios.get(
-              `http://localhost:4000/api/folders/form/${formId}`,
+              `${BACKEND_URL}/api/folders/form/${formId}`,
               {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -163,7 +165,7 @@ const Workspace = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:4000/api/folders/form/${formId}`,
+        `${BACKEND_URL}/api/folders/form/${formId}`,
         {
           folderId: selectedFolderId,
           formBotName: formName,
@@ -191,7 +193,7 @@ const Workspace = () => {
   const shareForm = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/api/forms/share/${formId}`,
+        `${BACKEND_URL}/api/forms/share/${formId}`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
