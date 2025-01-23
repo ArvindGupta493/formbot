@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../theme-context';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
 const FormDashboard = () => {
     const navigate = useNavigate();
     const [boolean, setBoolean] = useState(false);
@@ -36,7 +38,7 @@ const FormDashboard = () => {
     const fetchFolders = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:4000/api/folders/folders/:id",
+                `${BACKEND_URL}/api/folders/folders/:id`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -57,7 +59,7 @@ const FormDashboard = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:4000/api/folders/create-folder",
+                `${BACKEND_URL}/api/folders/create-folder`,
                 { name: createInput },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -81,7 +83,7 @@ const FormDashboard = () => {
     const handleDeleteFolder = async () => {
         try {
             await axios.delete(
-                `http://localhost:4000/api/folders/folder/${folderId}`,
+                `${BACKEND_URL}/api/folders/folder/${folderId}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -123,7 +125,7 @@ const FormDashboard = () => {
 
         try {
             const response = await axios.post(
-                `http://localhost:4000/api/folders/folder/${folderId}/create-form`,
+                `${BACKEND_URL}/api/folders/folder/${folderId}/create-form`,
                 { name: newFormName },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -161,7 +163,7 @@ const FormDashboard = () => {
 
         try {
             const response = await axios.get(
-                `http://localhost:4000/api/folders/folders/${item._id}/forms`,
+                `${BACKEND_URL}/api/folders/folders/${item._id}/forms`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -178,7 +180,7 @@ const FormDashboard = () => {
     const handleDeleteForm = async () => {
         try {
             await axios.delete(
-                `http://localhost:4000/api/folders/form/${formId}`,
+                `${BACKEND_URL}/api/folders/form/${formId}`,
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 }
@@ -211,21 +213,51 @@ const FormDashboard = () => {
     // Handle Permission Change
     const handlePermissionChange = (e) => {
         setPermission(e.target.value);
-        console.log("Permission changed:", e.target.value);  // This will log the new permission value
+        console.log("Permission changed:", e.target.value);  
     };
     
     // Handle Copy Link
-    const handleCopyLink = () => {
-        // Retrieve the user's ID from localStorage
-        const userId = localStorage.getItem('userId'); // Assuming you store userId in localStorage
-        const link = `http://localhost:5137/form-dashboard/${userId}/${permission}`; 
-
-        navigator.clipboard.writeText(link).then(() => {
-            alert(`Link copied with ${permission} permission`);
-        }).catch(err => {
-            console.error('Error copying link:', err);
-        });
+    const handleCopyLink = async () => {   
+        const response = `http://localhost:5173/Formdashboard?permission=${permission}`;
+        navigator.clipboard.writeText(response)
+            .then(() => alert(`Link copied with ${permission} permission`))
+            .catch(err => console.error('Error copying link:', err));
     };
+
+    // const handleCopyLink = async () => {
+    //     if (!navigator.clipboard) {
+    //         alert('Clipboard API not supported in this browser.');
+    //         return;
+    //     }
+    
+    //     try {
+    //         const response = await fetch('http://localhost:3000/api/generateShareLink', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             credentials: 'include',
+    //             body: JSON.stringify({ permission }),
+    //         });
+    
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+    
+    //         const data = await response.json();
+    //         if (data.success && data.link) {
+    //             await navigator.clipboard.writeText(data.link);
+    //             alert('Link copied to clipboard!');
+    //         } else {
+    //             throw new Error(data.message || 'Invalid response from the server.');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error copying link:', error);
+    //         alert(`An error occurred while copying the link: ${error.message}`);
+    //     }
+    // };
+    
+    
     
 
     return (
@@ -245,10 +277,7 @@ const FormDashboard = () => {
                         <div className={style.dark}>
                             <p>Light</p>
                             <label className={style.switch}>
-                                <input type="checkbox"
-                                    onChange={toggleTheme}
-                                    checked={theme == 'dark'}
-                                />
+                                <input type="checkbox"  onChange={toggleTheme}  checked={theme == 'dark'} />
                                 <span className={`${style.slider} ${style.round}`}></span>
                             </label>
                             <p>Dark</p>
@@ -298,12 +327,12 @@ const FormDashboard = () => {
                                         <span onClick={() => setBoolean(false)}>x</span></div>
                                     <div className={style.shareModel_mail}>
                                         <label htmlFor="email">Invite by Email
-                                            <select name="edit" id="edit" onChange={handlePermissionChange}>
+                                            <select onChange={handlePermissionChange}>
                                                 <option value="edit">Edit</option>
                                                 <option value="view">View</option>
                                             </select>
                                         </label>
-                                        <input type="email" name='email' placeholder="Enter email id" />
+                                        <input placeholder="Enter email id"/>
                                     </div>
                                     <button>Send Invite</button>
                                     <p>Invite by link</p>
@@ -319,13 +348,8 @@ const FormDashboard = () => {
                             <div className={style.Create_folder_modalContent}>
                                 <form onSubmit={handleCreateFolder}>
                                     <h3>Create New Folder</h3>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter folder name"
-                                        value={createInput}
-                                        onChange={handleInputChange}
-                                        className={style.Create_folder_modalInput}
-                                        required
+                                    <input  type="text"  placeholder="Enter folder name" value={createInput}
+                                        onChange={handleInputChange}  className={style.Create_folder_modalInput} required
                                     />
                                     <div className={style.Create_folder_modalActions}>
                                         <button className={style.doneButton} type='submit'>Done</button>
@@ -343,13 +367,8 @@ const FormDashboard = () => {
                             <div className={style.Create_folder_modalContent}>
                                 <form onSubmit={handleCreateFormSubmit}>
                                     <h3>Create New Form</h3>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter form name"
-                                        value={newFormName}
-                                        onChange={handleFormInputChange}
-                                        className={style.Create_folder_modalInput}
-                                        required
+                                    <input type="text" placeholder="Enter form name" value={newFormName}
+                                        onChange={handleFormInputChange}  className={style.Create_folder_modalInput} required
                                     />
                                     <div className={style.Create_folder_modalActions}>
                                         <button className={style.doneButton} type="submit">Done</button>
@@ -394,4 +413,3 @@ const FormDashboard = () => {
 };
 
 export default FormDashboard;
-
