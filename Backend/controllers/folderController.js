@@ -1,26 +1,18 @@
   const Folder = require("../schema/folder.schema");
-  const FormBot = require("../schema/formbot.schema"); // Import FormBot model
+  const FormBot = require("../schema/formbot.schema");
   const ShareableLink = require("../schema/share.schema");
-  const { uuid } = require('uuidv4');
+  const { v4: uuidv4 } = require('uuid');
 
   exports.createFolder = async (req, res) => {
     try {
-      const { name } = req.body; // Get the folder name from the request body
-  
-      // Validate folder name
+      const { name } = req.body;   
       if (!name) {
         return res.status(400).json({ message: "Folder name is required" });
-      }
-  
-      // Create a new folder
-      const newFolder = new Folder({
-        name,
-        userId: req.user.id, // Associate the folder with the user (if required)
-        forms: [], // Initialize an empty array for forms
-      });
-  
+      }  
+      const newFolder = new Folder({ name, userId: req.user.id, forms: [] });
+      
       await newFolder.save();
-  
+
       res.status(201).json({
         success: true,
         message: "Folder created successfully",
@@ -36,21 +28,19 @@
   };
   exports.createForm = async (req, res) => {
     try {
-      const { folderId } = req.params; // Folder ID from request params
-      const { name } = req.body; // Form name from request body
+      const { folderId } = req.params; 
+      const { name } = req.body; 
   
       if (!folderId) {
         return res.status(400).json({ message: "Folder ID is required" });
       }
   
-      // Find the folder by ID
       const folder = await Folder.findById(folderId);
   
       if (!folder) {
         return res.status(404).json({ message: "Folder not found" });
       }
   
-      // Create a new formBot (not Form)
       const formBot = new FormBot({
         name: name || "New Form",
         folder: folderId,
@@ -71,8 +61,6 @@
   
   exports.getFolders = async (req, res) => {
     try {
-      // console.log(req.user.id);
-
       const output = await Folder.find({ userId: req.user.id });
       res.status(200).json({ success: true, output });
     } catch (error) {
@@ -82,7 +70,6 @@
 
 
   //getting forms by folder id
-
   exports.getFormsByFolderId = async (req, res) => {
     const { folderId } = req.params; // Get the folder ID from the request params
     console.log('Folder ID:', folderId);
@@ -246,110 +233,21 @@
       });
     }
   };
+   
+
+// original
   exports.generateShareLink = async (req, res) => {
     try {
-        const formId = req.body.formId; // Get formId from the request body
-
-        if (!formId) {
-            return res.status(400).json({ success: false, message: 'Form ID is required' });
+        if (!req.user || !req.user.id) {
+            return res.status(400).json({ success: false, message: 'User ID is required.' });
         }
-
-        // Logic to generate shareable link
-        const link = `${req.protocol}://${req.get('host')}/form/${formId}`;
+        const frontendUrl = 'http://localhost:5173';
+        // const link = `${frontendUrl}/Formdashboard/${req.user.id}`; // Use user ID to generate the share link
+        const link = `${frontendUrl}/Formdashboard`; // Use user ID to generate the share link
 
         return res.status(200).json({ success: true, link });
     } catch (error) {
         console.error('Error generating share link:', error);
         return res.status(500).json({ success: false, message: 'Server error' });
-    }
-};
-
-
-
-// folderController.js
-exports.shareForm = async (req, res) => {
-  const { formId } = req.body;
-
-  try {
-      // Find the form by formId
-      const form = await FormBot.findById(formId);
-
-      if (!form) {
-          return res.status(404).json({ message: "Form not found." });
-      }
-
-      // Generate a unique link (can be a short unique ID)
-      const shareableLinkId = uuid(); // A simple unique link identifier
-
-      // Save shareable link and form reference
-      const shareableLink = new ShareableLink({
-          form: form._id,
-          linkId: shareableLinkId,
-      });
-
-      await shareableLink.save();
-
-      // Return the generated link
-      res.json({
-          success: true,
-          link: `${req.protocol}://${req.get('host')}/form/${shareableLinkId}`, // The URL to be shared
-      });
-  } catch (error) {
-      res.status(500).json({ message: "Error generating shareable link." })
-      console.log(error);
-  }
-};
-
-
-
-
-
-
-  exports.createOrUpdateForm = async (req, res) => {
-    try {
-        const { folderId } = req.params;
-        const { formId, name, fields } = req.body; // Get form data from request
-
-        if (!folderId) {
-            return res.status(400).json({ message: "Folder ID is required" });
-        }
-
-        const folder = await Folder.findById(folderId);
-        if (!folder) {
-            return res.status(404).json({ message: "Folder not found" });
-        }
-
-        let form;
-
-        if (formId) {
-            // Update existing form
-            form = await FormBot.findById(formId);
-            if (!form) {
-                return res.status(404).json({ message: "Form not found" });
-            }
-
-            form.name = name || form.name; // Update form name
-            form.fields = fields; // Update fields
-        } else {
-            // Create new form if no formId is provided
-            form = new FormBot({
-                name: name || "New Form",
-                folder: folderId,
-                fields: fields || [],
-            });
-            folder.formBots.push(form._id);
-        }
-
-        await form.save();
-        await folder.save(); // Save folder if a new form is added
-
-        res.status(200).json({
-            success: true,
-            message: formId ? "Form updated successfully" : "Form created successfully",
-            form,
-        });
-    } catch (error) {
-        console.error("Error saving form:", error.message);
-        res.status(500).json({ success: false, message: "Error saving form" });
     }
 };
