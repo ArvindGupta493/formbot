@@ -1,49 +1,55 @@
-// const URL = 'http://localhost:4000/api';
-
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
-// backend services userRegister
+// Backend services: User Registration
 export const userRegister = async (data) => {
-    return await fetch(`${BACKEND_URL}/api/user/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-}
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/user/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-// backend services userlogin
-export const userLogin = async (data) => {
-    return await fetch(`${BACKEND_URL}/api/user/login`,{
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
+    return response; // Let the caller handle the response status
+  } catch (error) {
+    console.error("Error during user registration fetch:", error);
+    throw new Error("Failed to connect to the server.");
+  }
 };
 
-// create folder service
-// export const createFolder = async (data) => {
-//     return await fetch(`${URL}/folders/create-folder`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': 'Bearer ' + localStorage.getItem('token')
-//         },
-//         body: JSON.stringify(data)
-//     })
-// };
+// Backend services: User Login
+export const userLogin = async (data) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-// get folders
-export const getFolder = async () => {
-    const response = await fetch(`${BACKEND_URL}/api/folders/folders/:id`, {
+    return response; // Let the caller handle the response status
+  } catch (error) {
+    console.error("Error during user login fetch:", error);
+    throw new Error("Failed to connect to the server.");
+  }
+};
+
+// Get folders service
+export const getFolder = async (id) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/folders/folders/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    return response;
-  };
+
+    return response; // Let the caller handle the response status
+  } catch (error) {
+    console.error("Error fetching folder data:", error);
+    throw new Error("Failed to fetch folder data.");
+  }
+};
