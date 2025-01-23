@@ -5,15 +5,14 @@
   import { useParams } from 'react-router-dom';
   import profile from '../../assets/avatar.jpg';
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
   const ChatbotForm = () => {
     const [form, setForm] = useState(null);
     const [responses, setResponses] = useState([]); // Store chat history
     const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
     const [formCompleted, setFormCompleted] = useState(false);
     const [currentValue, setCurrentValue] = useState(''); // To store current input value
-
-
-
     const { linkId } = useParams();
     
     useEffect(() => {
@@ -26,7 +25,7 @@
       const fetchFormData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:4000/api/forms/share/${linkId}`,
+            `${BACKEND_URL}/api/forms/share/${linkId}`,
 
   
           );
@@ -49,7 +48,7 @@
     const submitForm = useCallback(async (finalResponses) => {
       try {
         const response = await axios.post(
-          `http://localhost:4000/api/forms/save-response`,
+          `${BACKEND_URL}/api/forms/save-response`,
           {
             formId: form._id,
             responses: finalResponses,
