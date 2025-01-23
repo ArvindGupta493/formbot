@@ -1,4 +1,5 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://formbot-navy.vercel.app";
+// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://formbot-navy.vercel.app";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
 // Backend services: User Registration
 export const userRegister = async (data) => {
