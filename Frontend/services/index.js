@@ -1,8 +1,10 @@
-const URL = 'http://localhost:4000/api';
+// const URL = 'http://localhost:4000/api';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
 // backend services userRegister
 export const userRegister = async (data) => {
-    return await fetch(`${URL}/user/register`, {
+    return await fetch(`${BACKEND_URL}/api/user/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -13,7 +15,7 @@ export const userRegister = async (data) => {
 
 // backend services userlogin
 export const userLogin = async (data) => {
-    return await fetch(`${URL}/user/login`,{
+    return await fetch(`${BACKEND_URL}/api/user/login`,{
         method: 'POST',
         headers:{
             'Content-Type': 'application/json'
@@ -36,7 +38,7 @@ export const userLogin = async (data) => {
 
 // get folders
 export const getFolder = async () => {
-    const response = await fetch(`${URL}/api/folders/folders/:id`, {
+    const response = await fetch(`${BACKEND_URL}/api/folders/folders/:id`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
