@@ -298,7 +298,3 @@ exports.getFormResponses = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 92f3087 (Your descriptive commit message here)
