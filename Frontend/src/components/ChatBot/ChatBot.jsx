@@ -5,6 +5,7 @@
   import { useParams } from 'react-router-dom';
   import profile from '../../assets/avatar.jpg';
 
+<<<<<<< HEAD
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
   const ChatbotForm = () => {
@@ -27,6 +28,31 @@
           const response = await axios.get(
             `${BACKEND_URL}/api/forms/share/${linkId}`,
 
+=======
+  const ChatbotForm = () => {
+    const [form, setForm] = useState(null);
+    const [responses, setResponses] = useState([]); // Store chat history
+    const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
+    const [formCompleted, setFormCompleted] = useState(false);
+    const [currentValue, setCurrentValue] = useState(''); // To store current input value
+
+
+
+    const { linkId } = useParams();
+    
+    useEffect(() => {
+      if (!linkId) {
+        console.error("Error: linkId is undefined");
+        alert("Invalid link ID. Please check the URL.");
+        return; 
+      }
+    
+      const fetchFormData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:4000/api/forms/share/${linkId}`,
+
+>>>>>>> 92f3087 (Your descriptive commit message here)
   
           );
           if (response.data.success && response.data.form) {
@@ -48,7 +74,11 @@
     const submitForm = useCallback(async (finalResponses) => {
       try {
         const response = await axios.post(
+<<<<<<< HEAD
           `${BACKEND_URL}/api/forms/save-response`,
+=======
+          `http://localhost:4000/api/forms/save-response`,
+>>>>>>> 92f3087 (Your descriptive commit message here)
           {
             formId: form._id,
             responses: finalResponses,
