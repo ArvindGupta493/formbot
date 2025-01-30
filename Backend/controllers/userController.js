@@ -69,25 +69,24 @@ exports.loginUser = async (req, res) => {
             return res.status(400).json({ success: false, message: 'User not found' });
         }
 
-        // Check if password matches (assuming bcrypt for password encryption)
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
             return res.status(400).json({ success: false, message: 'Invalid credentials' });
         }
 
-        // Generate JWT token
-        const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_JWT, {
-            expiresIn: '400h',
+        const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_JWT, {     // Generate JWT token
+            expiresIn: '40000h',
         });
 
-        res.cookie("token", token);
-        res.status(200).json({ success: true, token });
+        res.cookie("token", token);     // Send token and userId in the response
+        res.status(200).json({ success: true, token, userId: user._id });
 
     } catch (error) {
         console.error('Error logging in:', error.message);
         res.status(500).json({ success: false, message: 'Server error' });
     }
-} 
+};
+
 // user.controller.js
 
 

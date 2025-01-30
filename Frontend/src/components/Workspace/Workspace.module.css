@@ -424,7 +424,7 @@ input:checked + .slider:before {
 }
 
 .Response_Table td {
-  color: var(--cell-text-color, #ffffff);
+  color: var(--cell-text-color, #ffffff); 
   word-wrap: break-word;
 }
 

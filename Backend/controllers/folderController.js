@@ -1,5 +1,6 @@
   const Folder = require("../schema/folder.schema");
   const FormBot = require("../schema/formbot.schema");
+  const User = require("../schema/user.schema");
   const ShareableLink = require("../schema/share.schema");
   const { v4: uuidv4 } = require('uuid');
 
@@ -129,41 +130,40 @@
 
 
   exports.updateFormById = async (req, res) => {
-    const { formId } = req.params;  // Get formId from request params
-    const { formBotName, fields } = req.body; // Get form name and fields to be updated
-    console.log('Form ID:', formId);
+    const { formId } = req.params;
+    const { formBotName, fields } = req.body;
+  
     try {
-      // Step 1: Find the form by ID
       const form = await FormBot.findById(formId);
       if (!form) {
-        return res.status(404).json({
-          success: false,
-          message: 'Form not found',
-        });
+        return res.status(404).json({ success: false, message: 'Form not found' });
       }
-
-      // Step 2: Update form data
-      form.name = formBotName || form.name; // Update name if provided
-      form.fields = fields;  // Update the fields (bubbles and inputs)
-
-      // Step 3: Save the updated form
+  
+      form.name = formBotName || form.name;
+  
+      // Ensure all field types are handled
+      form.fields = fields.map(field => {
+        if (field.type === "rating") {
+          return { ...field, value: field.value || 1 }; 
+        } else if (field.type === "buttons") {
+          return { ...field, options: field.options || ["Submit"] }; // Default to Submit if missing
+        }
+        return field;
+      });
+  
       await form.save();
-
-      // Step 4: Respond with success
+  
       res.status(200).json({
         success: true,
-        message: 'Form updated successfully!  in folder',
+        message: 'Form updated successfully!',
         form: form,
       });
     } catch (error) {
       console.error('Error updating form:', error.message);
-      res.status(500).json({
-        success: false,
-        message: 'Error updating form',
-      });
+      res.status(500).json({ success: false, message: 'Error updating form' });
     }
   };
-
+  
 
   exports.deleteFolderById = async (req, res) => {
     const { folderId } = req.params;
@@ -233,21 +233,47 @@
       });
     }
   };
-   
 
-// original
   exports.generateShareLink = async (req, res) => {
     try {
-        if (!req.user || !req.user.id) {
-            return res.status(400).json({ success: false, message: 'User ID is required.' });
-        }
-        const frontendUrl = 'http://localhost:5173';
-        // const link = `${frontendUrl}/Formdashboard/${req.user.id}`; // Use user ID to generate the share link
-        const link = `${frontendUrl}/Formdashboard`; // Use user ID to generate the share link
+      const userId = req.user.id; // Retrieve the logged-in user's ID from the auth middleware
+      if (!userId) {
+        return res.status(400).json({ message: "User ID is required." });
+      }
 
-        return res.status(200).json({ success: true, link });
+
+      const frontendUrl = 'http://localhost:5173'; 
+      const shareLink = `${frontendUrl}/formdashboard/${userId}`;
+   
+      res.status(200).json({ success: true,link: shareLink });
     } catch (error) {
-        console.error('Error generating share link:', error);
-        return res.status(500).json({ success: false, message: 'Server error' });
+      console.error("Error generating share link:", error.message);
+      res.status(500).json({
+        success: false,
+        message: "Failed to generate share link.",
+      });
     }
-};
+  };
+  exports.getFormDashboard = async (req, res) => {
+    try {
+      const userId = req.user.id; // Retrieve the logged-in user's ID from the auth middleware
+  
+      // Fetch the user to confirm validity
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found." });
+      }
+  
+      // Define the user's form dashboard link
+      const dashboardLink = `http://localhost:5173/form-dashboard/${userId}`;
+  
+      // Redirect the user to their form dashboard
+      return res.redirect(302, dashboardLink);
+    } catch (error) {
+      console.error("Error redirecting to the dashboard:", error.message);
+      res.status(500).json({
+        success: false,
+        message: `Error redirecting to the dashboard: ${error.message}`,
+      });
+    }
+  };

@@ -114,17 +114,18 @@ const Workspace = () => {
       
     fetchFormData();
   }, [formId, fetchResponses]);
+
   
-const addBubble = (type) => {
-  const newField = {
-    label: `${type}`,
-    type: "bubble",
-    sequence: fields.length + 1,
-    prefilled: true,
-    value: "",
+  const addBubble = (type) => {
+    const newField = {
+      label: `${type}`,
+      type: "bubble",
+      sequence: fields.length + 1,
+      prefilled: true,
+      value: "",
+    };
+    setFields([...fields, newField]);
   };
-  setFields([...fields, newField]);
-};
 
   const addInput = (inputType) => {
     const newField = {
@@ -137,37 +138,6 @@ const addBubble = (type) => {
     setFields([...fields, newField]);
   };
 
-  const addPhoneInput = () => {
-    const newField = {
-      label: "Phone Number",
-      type: "input",
-      inputType: "number",
-      sequence: fields.length + 1,
-      value: "",
-    };
-    setFields([...fields, newField]);
-  };
-  
-  const addRatingInput = () => {
-    const newField = {
-      label: "Rating",
-      type: "rating",
-      sequence: fields.length + 1,
-      value: 1,  
-    };
-    setFields([...fields, newField]);
-  };
-  
-  const addButtonsInput = () => {
-    const newField = {
-      label: "Buttons",
-      type: "buttons",
-      sequence: fields.length + 1,
-      options: ["Submit"], 
-    };
-    setFields([...fields, newField]);
-  };
-  
   const handleFieldChange = (index, newValue) => {
     const updatedFields = [...fields];
     updatedFields[index].value = newValue;
@@ -178,7 +148,7 @@ const addBubble = (type) => {
     try {
       const selectedFolderId = localStorage.getItem("folderId");
       const token = localStorage.getItem("token");
-  
+
       if (!formId) {
         toast.error("Form ID is missing.");
         return;
@@ -187,38 +157,22 @@ const addBubble = (type) => {
         toast.error("User not authenticated.");
         return;
       }
-  
+
       const response = await axios.put(
         `${BACKEND_URL}/api/folders/form/${formId}`,
         {
           folderId: selectedFolderId,
           formBotName: formName,
-          fields: fields.map(field => {
-            let fieldData = {
-              label: field.label,
-              type: field.type,
-              sequence: field.sequence,
-              value: field.type === "rating" ? parseInt(field.value, 10) || 1 : field.value || "",
-            };
-  
-            // Add inputType only for input fields
-            if (field.type === "input") {
-              fieldData.inputType = field.inputType || "text";
-            }
-  
-            // Add options only for buttons
-            if (field.type === "buttons") {
-              fieldData.options = field.options || ["Submit"];
-            }
-  
-            return fieldData;
-          }),
+          fields: fields.map((field) => ({
+            ...field,
+            value: field.value.trim(),
+          })),
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-  
+
       if (response.data.success) {
         toast.success("Form updated successfully!");
       } else {
@@ -229,8 +183,6 @@ const addBubble = (type) => {
       toast.error(error.response?.data?.message || "Error updating form");
     }
   };
-  
-  
 
   const shareForm = async () => {
     try {
@@ -331,13 +283,13 @@ const addBubble = (type) => {
                 </div>
                 <div className={style.inputes}>
                   <h3>Input Fields</h3>
-                  <button onClick={() => addInput("text")}><i className="fa-regular fa-message"></i> Text</button>
-                  <button onClick={() => addInput("number")}><i className="fa-regular fa-hashtag"></i> Number </button>
-                  <button onClick={() => addInput("email")}> <i className="fa-regular fa-at"></i> Email</button>
-                  <button onClick= {addPhoneInput}> <i className="fa-solid fa-phone"></i> Phone</button>
-                  <button onClick={() => addInput("date")}><i className="fa-regular fa-calendar"></i> Date</button>
-                  <button onClick= {addRatingInput}><i className="fa-regular fa-star"></i> Rating </button>
-                  <button onClick={addButtonsInput}><i className="fa-regular fa-square-check"></i> Buttons</button>
+                    <button onClick={() => addInput("text")}>    <i className="fa-regular fa-message"></i>      Text     </button>
+                    <button onClick={() => addInput("number")}>  <i className="fa-regular fa-hashtag"></i>      Number   </button>
+                    <button onClick={() => addInput("email")}>   <i className="fa-regular fa-at"></i>           Email    </button>
+                    <button onClick={() => addInput("number")}>  <i className="fa-solid fa-phone"></i>          Phone    </button>
+                    <button onClick={() => addInput("date")}>    <i className="fa-regular fa-calendar"></i>     Date     </button>
+                    <button onClick={() => addInput("Rating")}>  <i className="fa-regular fa-star"></i>         Rating   </button>
+                    <button onClick={() => addInput("Buttons")}> <i className="fa-regular fa-square-check"></i> Buttons  </button>
                 </div>
               </div>
             </div>
@@ -348,74 +300,37 @@ const addBubble = (type) => {
                     <h4> <i className="fa-regular fa-flag"></i>Start  </h4>
                 </div>
                 {fields.map((field, index) => (
-  <div key={index} className={style.Workspace_FormField}>
-    <label>{field.label}</label>
-
-    {field.type === "input" ? (
-      <input
-        type={field.inputType}
-        placeholder={`Enter ${field.inputType}`}
-        value={field.value}
-        onChange={(e) => handleFieldChange(index, e.target.value)}
-      />
-    ) : field.type === "rating" ? (
-      <input
-        type="number"
-        min="1"
-        max="5"
-        value={field.value}
-        onChange={(e) => {
-          const newValue = Math.max(1, Math.min(5, e.target.value));  // Limit to 1-5
-          handleFieldChange(index, newValue);
-        }}
-        placeholder="Give rating (1-5)"
-      />
-    ) : field.type === "buttons" ? (
-      <div>
-        {field.options.map((option, i) => (
-          <button key={i} onClick={() => handleFieldChange(index, option)}>{option}</button>
-        ))}
-      </div>
-    ) 
-    : 
-    field.type === "bubble" && field.value ? (
-      // Check for specific media types and render accordingly
-      // field.label === "Image" ? (
-      //   <img src={field.value} alt="Bubble Image" className={style.BubbleImage} />
-      // ) : field.label === "Video" ? (
-      //   <video controls className={style.BubbleVideo}>
-      //     <source src={field.value} type="video/mp4" />
-      //     Your browser does not support the video tag.
-      //   </video>
-      // ) : field.label === "GIF" ? (
-      //   <img src={field.value} alt="Bubble GIF" className={style.BubbleGIF} />
-      // ) :
-       (
-        <input
-          type="text"
-          placeholder="Enter bubble data"
-          value={field.value}
-          onChange={(e) => handleFieldChange(index, e.target.value)}
-        />
-      )
-    ) : (
-      <input
-        type="text"
-        placeholder="Enter bubble data"
-        value={field.value}
-        onChange={(e) => handleFieldChange(index, e.target.value)}
-      />
-    )}
-
-    <div className={style.deleteBtn}>
-      <button onClick={() => deleteField(index)}>
-        <i className="fa-solid fa-trash-can"></i>
-      </button>
-    </div>
-  </div>
-))}
-
-
+                  <div key={index} className={style.Workspace_FormField}>
+                    <label>{field.label}</label>
+                    {field.type === "input" ? (
+                      <input
+                        type={field.inputType}
+                        placeholder={`Enter ${field.inputType}`}
+                        value={field.value}
+                        onChange={(e) =>
+                          handleFieldChange(index, e.target.value)
+                        }
+                      />
+                    ) : (
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter bubble data"
+                          value={field.value}
+                          onChange={(e) =>
+                            handleFieldChange(index, e.target.value)
+                          }
+                        />
+                      </div>
+                    )}
+                    <div className={style.deleteBtn}>
+                      <button onClick={() => deleteField(index)}>
+                        {" "}
+                        <i className="fa-solid fa-trash-can"></i>
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -476,4 +391,240 @@ const addBubble = (type) => {
 
 export default Workspace;
 
-// update the addbubble's image,video,gif fields as when in this options we put link of their respective fields of photo,video,gif they will show that image,video,gif in the chatbotform
+// original
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// original chatbot.jsx
+
+
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import style from './ChatBot.module.css';
+import send from '../../assets/send.png';
+import { useParams } from 'react-router-dom';
+import profile from '../../assets/avatar.jpg';
+
+// const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
+const ChatbotForm = () => {
+  const [form, setForm] = useState(null);
+  const [responses, setResponses] = useState([]); // Store chat history
+  const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
+  const [formCompleted, setFormCompleted] = useState(false);
+  const [currentValue, setCurrentValue] = useState(''); // To store current input value
+  const { linkId } = useParams();
+  
+  useEffect(() => {
+    if (!linkId) {
+      console.error("Error: linkId is undefined");
+      alert("Invalid link ID. Please check the URL.");
+      return; 
+    }
+  
+    const fetchFormData = async () => {
+      try {
+        const response = await axios.get(
+          `${BACKEND_URL}/api/forms/share/${linkId}`,
+        );
+        if (response.data.success && response.data.form) {
+          setForm(response.data.form);
+        } else {
+          console.error("Invalid response data:", response.data);
+          alert("Form not found");
+        }
+      } catch (error) {
+        console.error("Error fetching form data:", error);
+        alert("Failed to fetch form data. Please try again.");
+      }
+    };
+  
+    fetchFormData();
+  }, [linkId]);
+
+  // Wrap submitForm in useCallback to ensure stability across renders
+  const submitForm = useCallback(async (finalResponses) => {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/forms/save-response`,
+        {
+          formId: form._id,
+          responses: finalResponses,
+          submittedAt: new Date(),   // this is the submitted time
+        }
+      );
+  
+      if (response.data.success) {
+        // alert('Thank you for completing the form!'); 
+        console.log('Submitted at:', response.data.submittedAt); // Check the response
+      } else {
+        alert('Error submitting form responses');
+      }
+    } catch (error) {
+      console.error('Error submitting form responses:', error);
+    }
+  }, [form]);
+  
+  // Function to handle bubble field progression
+  const handleBubbleResponse = useCallback(() => {
+    const currentField = form.fields[currentFieldIndex];
+    const newResponse = {
+      label: currentField.label,
+      answer: currentField.value,
+      type: 'bubble', 
+    };
+
+    const updatedResponses = [...responses, newResponse];
+
+    setResponses(updatedResponses);
+
+    // Check if it's the last field and mark as completed
+    if (currentFieldIndex === form.fields.length - 1) {
+      setFormCompleted(true);
+      submitForm(updatedResponses);
+    } else {
+      setCurrentFieldIndex(currentFieldIndex + 1);
+    }
+  }, [currentFieldIndex, form, responses, submitForm]);
+
+  useEffect(() => {
+    if (form && form.fields.length > 0) {
+      const currentField = form.fields[currentFieldIndex];
+
+      if (currentField.type === 'bubble') {
+        setTimeout(() => {
+          handleBubbleResponse();
+        }, 1000); 
+      }
+    }
+  }, [currentFieldIndex, form, handleBubbleResponse]); 
+
+  // Function to handle input field submission
+  const handleInputSubmit = async (value) => {
+    const currentField = form.fields[currentFieldIndex];
+    const newResponse = {
+      label: currentField.label,
+      answer: value,
+      type: 'input', // Mark it as an input
+    };
+
+    const updatedResponses = [...responses, newResponse];
+
+    // Check if it's the last field and mark as completed
+    if (currentFieldIndex === form.fields.length - 1) {
+      setFormCompleted(true); 
+      await submitForm(updatedResponses); 
+    } else {
+      setResponses(updatedResponses); 
+      setCurrentFieldIndex(currentFieldIndex + 1);
+    }
+  };
+
+  if (!form) {
+    return <div>Loading form...</div>;
+  }
+
+  const currentField = form.fields[currentFieldIndex];
+  
+  console.log("Current Field Index:", currentFieldIndex);
+  console.log("Form Fields:", form.fields);
+  console.log("Current Field:", currentField);
+
+  return (
+    <div className={style.container}>
+      <div className={style.chatContainer}>
+        <h2>{form.name}</h2>
+        <div>
+          {/* Render all previous responses as a chat */}
+          {responses.map((response, index) => (
+<div key={index}>
+  {response.type === "bubble" ? (
+    <div className={style.bubbleDiv}>
+      <img src={profile} alt="botimg" className={style.botImg} />
+      <button className={style.bubbleStyle}>{response.answer}</button>
+    </div>
+  ) : (
+    <div className={style.inputDiv}>
+      <button className={style.inputStyle}>{response.answer}</button>
+    </div>
+  )}
+            </div>
+          ))}
+        </div>
+
+        {/* Render the current field based on its type */}
+        {currentField.type === "bubble" ? (
+          <div>
+            <p>{currentField.label}</p>
+            <p>{currentField.value}</p>
+          </div>
+        ) : (
+          <div className={style.inputContainer}>
+            <input
+              type={currentField.inputType}
+              placeholder={`Enter your ${currentField.label.toLowerCase()}`}
+              value={currentValue}
+              onChange={(e) => setCurrentValue(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                handleInputSubmit(currentValue);
+                setCurrentValue(""); // Clear input field after submission
+              }}>
+              <img src={send} alt="sendimg" />
+            </button>
+          </div>
+        )}
+
+        {/* Show Thank You message only if form is completed */}
+        {formCompleted && (
+          <div className={style.thankyouDiv}>
+            <h3>Thank you for filling out the form!</h3>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// export default ChatbotForm;
+
+
+// why the rating is not between 1 to 5 and buttons is a input  instead of submit button which is only available at the end when clicked it will save response and ahow the message  " <h3>Thank you for filling out the form!</h3>"  

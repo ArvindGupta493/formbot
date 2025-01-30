@@ -247,14 +247,14 @@ option{
 
 .New_folderForm{
     border: none;
-    width: 13vw;
+    width: 12.5vw;
     height: 15vw;
     color: #FFFFFFEB;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 7vh;
+    gap: 1vh;
     background-color: #FFFFFF80;
     border-radius: 6px;
     cursor: pointer;
@@ -275,8 +275,8 @@ option{
 
 .New_folderForm i{
     position: relative;
-    bottom: 11.5vh;
-    left: 6.4vw;
+    bottom: 14.5vh;
+    left: 6.0vw;
     color: #F55050;
 }
 

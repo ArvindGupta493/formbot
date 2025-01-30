@@ -1,4 +1,3 @@
-  // src/App.jsx
   import { Routes, Route } from 'react-router-dom';
   // import { ThemeProvider } from './context/ThemeContext'; // Import the ThemeProvider
   import Register from './components/Register/Register';
@@ -17,9 +16,9 @@
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Formdashboard" element={<FormDashboard />} />
+          <Route path="/Formdashboard/:userId" element={<FormDashboard />} />
           <Route path="/setting" element={<Setting />} />
-          <Route path="/workspace" element={<Workspace />} />
+          <Route path="/workspace/:formId" element={<Workspace />} />
           <Route path="/chatbot/:linkId" element={<ChatbotForm />} />
           {/* <Route path="/response" element={<Responses/>}/> */}
         </Routes>
