@@ -141,11 +141,10 @@
     
  
 }
-option{
- 
-    /* color: var(--text-color); */
+/* option{
+    color: var(--text-color);
     background-color: #121212;
-}
+} */
 .logout{
     color: #FFA54C;
 }
@@ -181,6 +180,7 @@ option{
 .Folder span{
     padding: 10px;
     background-color: rgb(48, 47, 47);
+    /* border: 1px solid var(--border-color, #000000); */
     color: #FFFFFFEB;
     border-radius: 6px;
     font-family: Open sans;
@@ -193,8 +193,10 @@ option{
 }
 .New_folder{
     padding: 10px;
-    background-color: rgb(48, 47, 47);
-    color: #FFFFFFEB;
+    /* background-color: rgb(48, 47, 47); */
+    border: 1px solid var(--border-color, #000000);
+
+    /* color: #FFFFFFEB; */
     border-radius: 6px;
     font-family: Open sans;
     font-size: 1rem;
@@ -246,16 +248,17 @@ option{
 }
 
 .New_folderForm{
-    border: none;
     width: 12.5vw;
     height: 15vw;
-    color: #FFFFFFEB;
+    border: 1px solid var(--border-color, #000000);
+    /* color: #FFFFFFEB; */
+    /* color: var(--text-color);                   */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1vh;
-    background-color: #FFFFFF80;
+    background-color: #7a7a7a80;
     border-radius: 6px;
     cursor: pointer;
 
@@ -266,7 +269,7 @@ option{
    align-items: center;
 } */
 .New_folderForm h3{
-    color: #FFFFFF;
+    /* color: #FFFFFF; */
     font-family: Open sans;
     font-size: 1rem;
     font-weight: 400;

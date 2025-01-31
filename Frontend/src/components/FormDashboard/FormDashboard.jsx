@@ -61,7 +61,7 @@ const FormDashboard = () => {
 
         try {
             const response = await axios.post(
-                `${BACKEND_URL}/api/folders/create-folder`,
+                `${BACKEND_URL}/api/folders/create-folder`, 
                 { name: createInput },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

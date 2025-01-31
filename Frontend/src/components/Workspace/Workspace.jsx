@@ -300,7 +300,7 @@ const Workspace = () => {
           </div>
 
           <div className={style.Workspace_Theme}>
-            <button  className={style.Workspace_flowbtn}  onClick={() => setShowResponse(true)} >  Flow </button>
+          {/* <button  className={style.Workspace_flowbtn}  onClick={() => setShowResponse(true)} >  Flow </button>
             <button
               className={style.Workspace_Responsebtn}
               onClick={() => {
@@ -309,12 +309,28 @@ const Workspace = () => {
               }}
             >
               Response
+            </button> */}
+
+            <button className={`${style.Workspace_flowbtn} ${showResponse ? style.activeButton : ""}`} 
+            onClick={() => setShowResponse(true)}
+            >
+                Flow
             </button>
+            <button
+              className={`${style.Workspace_Responsebtn} ${!showResponse ? style.activeButton : ""}`}
+              onClick={() => {
+                fetchResponses();
+                setShowResponse(false);
+              }}
+            >
+                Response
+            </button>
+
           </div>
 
           <div className={style.Workspace_NavbarBtns}>
             <div className={style.dark}>
-              <p>Light</p>
+              <p>Light</p>  
               <label className={style.switch}>
                 <input type="checkbox" onChange={toggleTheme} checked={theme === "dark"} />
                 <span className={`${style.slider} ${style.round}`}></span>
@@ -464,7 +480,7 @@ const Workspace = () => {
                   value={calculateCompletionRate()}
                   text={`${calculateCompletionRate()}%`}
                   styles={buildStyles({
-                    textColor: "white",
+                    textColor: "gray",
                     pathColor: "cyan",
                     trailColor: "#ddd",
                     textSize: "16px",
@@ -484,3 +500,4 @@ const Workspace = () => {
 };
 
 export default Workspace;
+

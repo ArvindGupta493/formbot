@@ -13,6 +13,8 @@ const Setting = () => {
     const [newPassword, setNewPassword] = useState('');
     const [updateMessage, setUpdateMessage] = useState('');
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('formId');
@@ -27,7 +29,9 @@ const Setting = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.put(
-                '/api/user/update-password',
+                `${BACKEND_URL}/api/user/update-password`,
+
+                // '/api/user/update-password',
                 { name, email, oldPassword, newPassword },
                 {
                     headers: {

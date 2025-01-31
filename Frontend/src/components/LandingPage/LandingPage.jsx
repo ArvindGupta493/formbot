@@ -49,7 +49,7 @@ const LandingPage = () => {
                                     anywhere on your web/mobile apps and start collecting results like magic.</p>
                             </div>
                             <div className={style.content1Btn}>
-                                <button>Create a FormBot  for free</button>
+                            <button className={style.NavCreate} onClick={()=>navigate('/login')}>Create a FormBot  for free</button>
                             </div>
                         </div>
                         <img src={UU} alt="" />

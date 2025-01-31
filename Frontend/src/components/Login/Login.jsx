@@ -29,7 +29,8 @@ const Login = () => {
         setLoginForm({ email: '', password: '' });
         localStorage.setItem('token', data.token);
         toast.success('User Logged In Successfully');
-        navigate(`/Formdashboard`);
+        const userId = localStorage.getItem("userId");
+        navigate(`/Formdashboard/${userId}`);
       } else {
         toast.error('User Login Failed');
       }
