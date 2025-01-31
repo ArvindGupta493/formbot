@@ -8,7 +8,7 @@ const generateToken = (user) => {
     email: user.email,
   };
 
-  return jwt.sign(payload, process.env.SECRET_JWT, { expiresIn: "1y" });
+  return jwt.sign(payload, process.env.SECRET_JWT, { expiresIn: "1000y" });
 };
 
 module.exports = generateToken;

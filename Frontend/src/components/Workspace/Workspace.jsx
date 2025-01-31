@@ -19,6 +19,7 @@ const Workspace = () => {
   const [viewCount, setViewCount] = useState(0);
   const [submittedCount, setSubmittedCount] = useState(0); 
   const formId = localStorage.getItem("formId");
+  const [isFormSaved, setIsFormSaved] = useState(false);
 
   const headers = Object.keys(forms[0] || {});
 
@@ -114,19 +115,27 @@ const Workspace = () => {
       
     fetchFormData();
   }, [formId, fetchResponses]);
-  
-const addBubble = (type) => {
-  const newField = {
-    label: `${type}`,
-    type: "bubble",
-    sequence: fields.length + 1,
-    prefilled: true,
-    value: "",
-  };
-  setFields([...fields, newField]);
-};
 
+  const addBubble = (type) => {
+    if (fields.some(field => field.type === "buttons")) {
+      toast.warn("You cannot add more fields after adding buttons.");
+      return;
+    }
+    const newField = {
+      label: `${type}`,
+      type: "bubble",
+      sequence: fields.length + 1,
+      prefilled: true,
+      value: "",
+    };
+    setFields([...fields, newField]);
+  };
+  
   const addInput = (inputType) => {
+    if (fields.some(field => field.type === "buttons")) {
+      toast.warn("You cannot add more fields after adding buttons.");
+      return;
+    }
     const newField = {
       label: `${inputType.charAt(0).toUpperCase() + inputType.slice(1)}`,
       type: "input",
@@ -136,8 +145,12 @@ const addBubble = (type) => {
     };
     setFields([...fields, newField]);
   };
-
+  
   const addPhoneInput = () => {
+    if (fields.some(field => field.type === "buttons")) {
+      toast.warn("You cannot add more fields after adding buttons.");
+      return;
+    }
     const newField = {
       label: "Phone Number",
       type: "input",
@@ -149,6 +162,10 @@ const addBubble = (type) => {
   };
   
   const addRatingInput = () => {
+    if (fields.some(field => field.type === "buttons")) {
+      toast.warn("You cannot add more fields after adding buttons.");
+      return;
+    }
     const newField = {
       label: "Rating",
       type: "rating",
@@ -159,6 +176,10 @@ const addBubble = (type) => {
   };
   
   const addButtonsInput = () => {
+    if (fields.some(field => field.type === "buttons")) {
+      toast.info("Buttons input already exists.");
+      return;
+    }
     const newField = {
       label: "Buttons",
       type: "buttons",
@@ -167,6 +188,7 @@ const addBubble = (type) => {
     };
     setFields([...fields, newField]);
   };
+  
   
   const handleFieldChange = (index, newValue) => {
     const updatedFields = [...fields];
@@ -193,26 +215,14 @@ const addBubble = (type) => {
         {
           folderId: selectedFolderId,
           formBotName: formName,
-          fields: fields.map(field => {
-            let fieldData = {
-              label: field.label,
-              type: field.type,
-              sequence: field.sequence,
-              value: field.type === "rating" ? parseInt(field.value, 10) || 1 : field.value || "",
-            };
-  
-            // Add inputType only for input fields
-            if (field.type === "input") {
-              fieldData.inputType = field.inputType || "text";
-            }
-  
-            // Add options only for buttons
-            if (field.type === "buttons") {
-              fieldData.options = field.options || ["Submit"];
-            }
-  
-            return fieldData;
-          }),
+          fields: fields.map(field => ({
+            label: field.label,
+            type: field.type,
+            sequence: field.sequence,
+            value: field.type === "rating" ? parseInt(field.value, 10) || 1 : field.value || "",
+            ...(field.type === "input" && { inputType: field.inputType || "text" }),
+            ...(field.type === "buttons" && { options: field.options || ["Submit"] })
+          })),
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -221,6 +231,7 @@ const addBubble = (type) => {
   
       if (response.data.success) {
         toast.success("Form updated successfully!");
+        setIsFormSaved(true);  // Disable fields after save
       } else {
         toast.error(response.data.message || "Failed to update form.");
       }
@@ -348,72 +359,70 @@ const addBubble = (type) => {
                     <h4> <i className="fa-regular fa-flag"></i>Start  </h4>
                 </div>
                 {fields.map((field, index) => (
-  <div key={index} className={style.Workspace_FormField}>
-    <label>{field.label}</label>
+                    <div key={index} className={style.Workspace_FormField}>
+                      <label>{field.label}</label>
+                      {field.type === "input" ? (
+                        <input
+                        type={field.inputType}
+                        placeholder={`Enter ${field.inputType}`}
+                        value={field.value}
+                        onChange={(e) => handleFieldChange(index, e.target.value)}
+                        disabled={isFormSaved}
+                        />
+                      ) : field.type === "rating" ? (
+                      <input    
+                      type="number"
+                      min="1"
+                      max="5"
+                      value={field.value}
+                      onChange={(e) => handleFieldChange(index, Math.max(1, Math.min(5, e.target.value)))}
+                      placeholder="Give rating (1-5)"
+                      disabled={isFormSaved}
+                      />
+                    ) : field.type === "buttons" ? (
+                    <div>
+                      {field.options.map((option, i) => (
+                        <button key={i} onClick={() => handleFieldChange(index, option)}>{option}</button>
+                      ))}
+                    </div>
+                    ) : field.type === "bubble" && field.value ? (
+                      // Check for specific media types and render accordingly
+                      // field.label === "Image" ? (
+                      //   <img src={field.value} alt="Bubble Image" className={style.BubbleImage} />
+                      // ) : field.label === "Video" ? (
+                      //   <video controls className={style.BubbleVideo}>
+                      //     <source src={field.value} type="video/mp4" />
+                      //     Your browser does not support the video tag.
+                      //   </video>
+                      // ) : field.label === "GIF" ? (
+                      //   <img src={field.value} alt="Bubble GIF" className={style.BubbleGIF} />
+                      // ) :
+                      (
+                       <input
+                       type="text"
+                       placeholder="Enter bubble data"
+                       value={field.value}
+                       onChange={(e) => handleFieldChange(index, e.target.value)}
+                       disabled={isFormSaved}
+                       />
+                      )
+                    ) : (
+                        <input
+                        type="text"
+                        placeholder="Enter bubble data"
+                        value={field.value}
+                        onChange={(e) => handleFieldChange(index, e.target.value)}
+                        disabled={isFormSaved}
+                        />
+                      )}
 
-    {field.type === "input" ? (
-      <input
-        type={field.inputType}
-        placeholder={`Enter ${field.inputType}`}
-        value={field.value}
-        onChange={(e) => handleFieldChange(index, e.target.value)}
-      />
-    ) : field.type === "rating" ? (
-      <input
-        type="number"
-        min="1"
-        max="5"
-        value={field.value}
-        onChange={(e) => {
-          const newValue = Math.max(1, Math.min(5, e.target.value));  // Limit to 1-5
-          handleFieldChange(index, newValue);
-        }}
-        placeholder="Give rating (1-5)"
-      />
-    ) : field.type === "buttons" ? (
-      <div>
-        {field.options.map((option, i) => (
-          <button key={i} onClick={() => handleFieldChange(index, option)}>{option}</button>
-        ))}
-      </div>
-    ) 
-    : 
-    field.type === "bubble" && field.value ? (
-      // Check for specific media types and render accordingly
-      // field.label === "Image" ? (
-      //   <img src={field.value} alt="Bubble Image" className={style.BubbleImage} />
-      // ) : field.label === "Video" ? (
-      //   <video controls className={style.BubbleVideo}>
-      //     <source src={field.value} type="video/mp4" />
-      //     Your browser does not support the video tag.
-      //   </video>
-      // ) : field.label === "GIF" ? (
-      //   <img src={field.value} alt="Bubble GIF" className={style.BubbleGIF} />
-      // ) :
-       (
-        <input
-          type="text"
-          placeholder="Enter bubble data"
-          value={field.value}
-          onChange={(e) => handleFieldChange(index, e.target.value)}
-        />
-      )
-    ) : (
-      <input
-        type="text"
-        placeholder="Enter bubble data"
-        value={field.value}
-        onChange={(e) => handleFieldChange(index, e.target.value)}
-      />
-    )}
-
-    <div className={style.deleteBtn}>
-      <button onClick={() => deleteField(index)}>
-        <i className="fa-solid fa-trash-can"></i>
-      </button>
-    </div>
-  </div>
-))}
+                      <div className={style.deleteBtn}>
+                        <button onClick={() => deleteField(index)}>
+                          <i className="fa-solid fa-trash-can"></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
 
 
               </div>
@@ -475,5 +484,3 @@ const addBubble = (type) => {
 };
 
 export default Workspace;
-
-// update the addbubble's image,video,gif fields as when in this options we put link of their respective fields of photo,video,gif they will show that image,video,gif in the chatbotform
