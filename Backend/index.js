@@ -44,8 +44,14 @@
     });
     
 
-
-
+    app.get('/api/user', (req, res) => {
+        res.json({ message: 'User route is working' });
+      });
+      
+    app.get('/', (req, res) => {
+        res.send('Hello from the backend!');
+      });
+      
 
     app.get('/form-dashboard/:userId', (req, res) => {
         const { userId, permission } = req.params;
