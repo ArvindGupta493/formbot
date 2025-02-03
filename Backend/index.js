@@ -15,8 +15,8 @@
 
     // Enable CORS
 
-    app.use(cors({ origin: 'https://your-frontend.vercel.app' }));
-    // app.use(cors({ }));
+    // app.use(cors({ origin: 'https://your-frontend.vercel.app' }));
+    app.use(cors({ }));
 
     // Define the port from environment or default to 4000
     const PORT = process.env.PORT || 4000;
