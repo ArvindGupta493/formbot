@@ -4,6 +4,7 @@ import style from './ChatBot.module.css';
 import send from '../../assets/send.png';
 import { useParams } from 'react-router-dom';
 import profile from '../../assets/avatar.jpg';
+import { toast } from "react-toastify";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
@@ -151,7 +152,16 @@ const ChatbotForm = () => {
                   <img src={profile} alt="botimg" className={style.botImg} />
                   {/* Render different media types for bubble */}
                   {response.answer.startsWith("http") ? (
-                    response.answer.endsWith(".mp4") ? (
+                      response.answer.includes("youtube.com") || response.answer.includes("youtu.be") ? (
+                        <iframe 
+                          className={style.bubbleMedia}
+                          src={`https://www.youtube.com/embed/${response.answer.split("v=")[1]?.split("&")[0]}`}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        ></iframe>
+                      ) : 
+                      response.answer.match(/\.(mp4|webm|ogg)(\?.*)?$/i) ? (
                       <video controls className={style.bubbleMedia}>
                         <source src={response.answer} type="video/mp4" />
                         Your browser does not support the video tag.
@@ -202,6 +212,7 @@ const ChatbotForm = () => {
               onClick={() => {
                 submitForm(responses);
                 setFormCompleted(true);
+                toast.success("Form Submitted Successfully");
               }}
               className={style.submitButton}>
               Submit

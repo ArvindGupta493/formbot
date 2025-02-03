@@ -405,14 +405,16 @@ const Workspace = () => {
                       // Check for specific media types and render accordingly
                       // field.label === "Image" ? (
                       //   <img src={field.value} alt="Bubble Image" className={style.BubbleImage} />
-                      // ) : field.label === "Video" ? (
+                      // ) :
+                      //  field.label === "Video" ? (
                       //   <video controls className={style.BubbleVideo}>
                       //     <source src={field.value} type="video/mp4" />
                       //     Your browser does not support the video tag.
                       //   </video>
                       // ) : field.label === "GIF" ? (
                       //   <img src={field.value} alt="Bubble GIF" className={style.BubbleGIF} />
-                      // ) :
+                      // ) 
+                      // :
                       (
                        <input
                        type="text"
