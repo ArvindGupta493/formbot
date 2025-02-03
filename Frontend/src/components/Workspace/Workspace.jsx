@@ -354,7 +354,7 @@ const Workspace = () => {
                     <button onClick={() => addBubble("Text")}>  <i className="fa-regular fa-message"></i>Text  </button>
                     <button onClick={() => addBubble("Image")}>  <i className="fa-regular fa-image"></i>Image  </button>
                     <button onClick={() => addBubble("Video")}>  <i className="fa-solid fa-film"></i>Video  </button>
-                    <button onClick={() => addBubble("GIF")}>  <i className="fa-solid fa-gif"></i>GIF  </button>
+                    <button onClick={() => addBubble("GIF")}>  <i className="fa-regular fa-file-video"></i>GIF  </button>
                 </div>
                 <div className={style.inputes}>
                   <h3>Input Fields</h3>
