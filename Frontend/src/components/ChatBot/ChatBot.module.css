@@ -11,6 +11,7 @@
     margin: 50px 100px; 
     width: 50%;
     height: 85vh;
+    /* margin-bottom: 50px; */
 }
 
 .chatContainer h2 {
@@ -99,6 +100,7 @@
     border: none;
     box-shadow: 0px 0px 5px 0px grey;
     margin-top: 20px;
+    margin-bottom: 50px; 
 }
 
 .inputContainer button {
@@ -110,7 +112,8 @@
     border-radius: 8px;
     border: none;
     outline: none;
-    cursor: pointer;
+    cursor: pointer;   
+    margin-bottom: 50px; 
 }
 
 .inputContainer img {
@@ -128,6 +131,7 @@
     margin-bottom: 50px; 
 }
 
+
 .ratingDiv {
     margin-left: 86%;
     text-align: center;
@@ -142,13 +146,14 @@
     margin-bottom: 10px;
     font-size: 1rem;
     font-family: Open sans;
+    margin-bottom: 50px; 
 }
 
 .ratingButton {
     text-align: right;
     justify-content: right;
     /* margin-right: -100px; */
-
+    /* margin-bottom: 20px;  */
     background-color: #FF8E21;
     color: #fff;
     padding: 10px;
@@ -195,6 +200,7 @@
     font-size: 1rem;
     cursor: pointer;
     margin-top: 20px;
+    /* margin-bottom: 50px;  */
 }
 
 .submitButton:hover {
