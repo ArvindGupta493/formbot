@@ -79,7 +79,8 @@ exports.loginUser = async (req, res) => {
         });
 
         res.cookie("token", token);     // Send token and userId in the response
-        res.status(200).json({ success: true, token, userId: user._id });
+        // res.status(200).json({ success: true, token, userId: user._id });
+        res.status(200).json({ success: true, token, userId: user._id, name: user.name });
 
     } catch (error) {
         console.error('Error logging in:', error.message);

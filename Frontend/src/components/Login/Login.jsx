@@ -28,6 +28,7 @@ const Login = () => {
       if (res.status === 200) {
         setLoginForm({ email: '', password: '' });
         localStorage.setItem('token', data.token);
+        localStorage.setItem('name', data.name);
         toast.success('User Logged In Successfully');
         const userId = localStorage.getItem("userId");
         navigate(`/Formdashboard/${userId}`);
@@ -44,7 +45,7 @@ const Login = () => {
     const token = localStorage.getItem('token');
     if (token) {
       toast.success('User Already Logged In');
-    const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId");
       navigate(`/Formdashboard/${userId}`);
     }
   }, [navigate]);
