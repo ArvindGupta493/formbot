@@ -243,7 +243,7 @@ const Workspace = () => {
   
   
 
-  const shareForm = async () => {
+  const   shareForm = async () => {
     try {
       const response = await axios.post(
         `${BACKEND_URL}/api/forms/share/${formId}`,
@@ -338,7 +338,11 @@ const Workspace = () => {
               <p>Dark</p>
             </div>
             <div className={style.Workspace_NavbarButton}>
-                <button className={style.Workspace_shareBtn} onClick={shareForm}>  Share </button>
+                <button className={style.Workspace_shareBtn} 
+                onClick={()=>{
+                     shareForm();
+                    updateForm(); 
+                 }} >  Share </button>
                 <button className={style.Workspace_saveBtn} onClick={updateForm}>  Save </button>
                 <button className={style.Workspace_XBtn} onClick={handleCross}>  x </button>
             </div>
